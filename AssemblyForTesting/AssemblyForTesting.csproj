@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Scenario.Annotations">
+      <HintPath>..\Scenario\bin\Debug\netstandard2.0\Scenario.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="Scenario.Core">
+      <HintPath>..\Scenario\bin\Debug\netstandard2.0\Scenario.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

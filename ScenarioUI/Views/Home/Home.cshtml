@@ -1,0 +1,33 @@
+﻿@* Generator: Template TypeVisibility: Internal *@
+@using ScenarioUI.Views.Shared
+@using ScenarioUI.ViewGenerators
+@inherits WebViewGenerator
+
+@{
+    Layout = new Layout
+    {
+        HttpContext = HttpContext,
+        Title = "💉 Prepare for testing"
+    };
+}
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                <i class="fas fa-apple-alt"></i> 
+                TestName
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var test in Tests)
+        {
+            <tr>
+                <td>
+                    @test
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

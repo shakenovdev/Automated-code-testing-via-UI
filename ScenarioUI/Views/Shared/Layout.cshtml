@@ -1,0 +1,25 @@
+﻿@* Generator: Template TypeVisibility: Internal *@
+@using ScenarioUI.ViewGenerators
+@inherits WebViewGenerator
+@functions
+{
+public string Title { get; set; }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    @if (!string.IsNullOrEmpty(Title))
+    {
+        <title>@Title</title>
+    }
+    <link href="@Root/css" rel="stylesheet">
+    <script src="@Root/javascript"></script>
+</head>
+
+<body>
+    @RenderBody()
+</body>
+
+</html>

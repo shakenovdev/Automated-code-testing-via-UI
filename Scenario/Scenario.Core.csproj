@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.0.1</Version>
+    <PackageId>Scenario</PackageId>
+    <Authors>shakenovdev</Authors>
+    <Company>shakenovdev</Company>
+    <Product>Scenario</Product>
+    <Description>UI for test automation</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Scenario.Annotations\Scenario.Annotations.csproj" />
+    <ProjectReference Include="..\ScenarioUI\ScenarioUI.csproj" />
+  </ItemGroup>
+
+</Project>

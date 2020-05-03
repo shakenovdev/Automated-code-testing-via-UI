@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Scenario</id>
+    <version>0.0.7</version>
+    <authors>Damir Shakenov</authors>
+    <owners>Damir Shakenov</owners>
+    <licenseUrl>https://github.com/shakenovdev</licenseUrl>
+    <projectUrl>https://github.com/shakenovdev</projectUrl>
+    <iconUrl>https://image.flaticon.com/teams/slug/google.jpg</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>UI for test automation</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2019</copyright>
+    <tags>ASP.NET Test Automation</tags>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="12.0.1" />
+    </dependencies>
+  </metadata>
+</package>

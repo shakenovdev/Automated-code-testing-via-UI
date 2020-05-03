@@ -1,0 +1,56 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\scripts\bootstrap.bundle.min.js" />
+    <None Remove="Resources\scripts\fontawesome.all.min.js" />
+    <None Remove="Resources\scripts\jquery-3.3.1.min.js" />
+    <None Remove="Resources\scripts\scenario.js" />
+    <None Remove="Resources\styles\bootstrap.min.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\scripts\bootstrap.bundle.min.js" />
+    <EmbeddedResource Include="Resources\scripts\fontawesome.all.min.js" />
+    <EmbeddedResource Include="Resources\scripts\jquery-3.3.1.min.js" />
+    <EmbeddedResource Include="Resources\scripts\scenario.js" />
+    <EmbeddedResource Include="Resources\styles\bootstrap.min.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Routing" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BL\BL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Views\Home\Home.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Home.generated.cs</LastGenOutput>
+    </None>
+    <None Update="Views\Shared\Layout.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Layout.generated.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\Home\Home.generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Home.cshtml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Shared\Layout.generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Layout.cshtml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>
