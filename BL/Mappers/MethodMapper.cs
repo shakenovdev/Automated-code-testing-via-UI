@@ -15,10 +15,11 @@ namespace BL.Mappers
             {
                 Id = entity.Id,
                 Name = entity.Name,
+                TypeName = entity.TypeName,
                 IsStatic = entity.IsStatic,
                 IsConstructor = entity.IsConstructor,
                 Variable = VariableMapper.ToVariableViewModel(entity.Variable),
-                Arguments = entity.Arguments
+                Arguments = entity.Arguments?
                     .Select(ArgumentMapper.ToArgumentViewModel)
                     .ToList()
             };
@@ -35,9 +36,10 @@ namespace BL.Mappers
                 VariableId = model.Variable?.Id,
                 IsStatic = model.IsStatic,
                 IsConstructor = model.IsConstructor,
+                TypeName = model.TypeName,
                 Name = model.Name,
                 Variable = VariableMapper.ToVariable(model.Variable),
-                Arguments = model.Arguments
+                Arguments = model.Arguments?
                     .Select(x => ArgumentMapper.ToArgument(x, model.Id))
                     .ToList()
             };

@@ -7,27 +7,125 @@
     Layout = new Layout
     {
         HttpContext = HttpContext,
-        Title = "💉 Prepare for testing"
+        Title = "💉 Prepare for testing",
+        SpecificScript = "scenariolist"
     };
 }
 
-<table class="table">
-    <thead class="thead-dark">
-        <tr>
-            <th>
-                <i class="fas fa-apple-alt"></i> 
-                TestName
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var test in Tests)
-        {
-            <tr>
-                <td>
-                    @test
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<script type="text/x-template" id="scenario-template">
+    <div :class="{'text-success': (scenario.LastExecutedStatus == 1), 
+                  'text-danger': (scenario.LastExecutedStatus == 2)}">
+        <span v-on:click="execute" v-show="!isExecuting"><i class="far fa-play-circle"></i></span>
+        <span v-show="isExecuting"><i class="fas fa-spinner fa-spin"></i></span>
+        <span v-on:dblclick="$root.openScenarioPage(scenario.Id)">{{scenario.Name}}</span>
+        <span class="text-primary" v-on:click="$root.openScenarioPage(scenario.Id)">
+            <i class="fas fa-edit"></i>
+        </span>
+        <span class="badge" 
+              v-show="scenario.LastExecutedStatus" 
+              :class="{'badge-success': (scenario.LastExecutedStatus == 1),
+                       'badge-danger': (scenario.LastExecutedStatus == 2)}">
+            {{scenario.LastExecutionTime}}
+        </span>
+        <span class="badge badge-danger" v-show="scenario.LastExecutedStatus == 2">
+            stack trace
+        </span>
+        <span class="text-danger" v-on:click="$emit('remove')">
+            <i class="fas fa-trash-alt"></i>
+        </span>
+    </div>
+</script>
+
+<script type="text/x-template" id="folder-template">
+    <div>
+        <span>
+            <span v-show="isOpen" v-on:click="isOpen = false"><i class="fas fa-folder-open"></i></span>
+            <span v-show="!isOpen" v-on:click="isOpen = true"><i class="fas fa-folder"></i></span>
+            <span v-on:dblclick="startRenaming" v-show="!isRenaming">
+                {{folder.Name}}
+            </span>
+            <input v-autowidth="{maxWidth: '15em', minWidth: '1em', comfortZone: 0}"
+                   v-model="folder.Name"
+                   v-show="isRenaming"
+                   v-on:keyup.enter="rename"
+                   v-on:blur="rename"
+                   ref="renameInput" />
+            <span class="text-primary" v-on:click="createNewFolder">
+                <i class="fas fa-folder-plus"></i>
+            </span>
+            <span class="text-danger" v-on:click="$emit('remove')">
+                <i class="fas fa-trash-alt"></i>
+            </span>
+        </span>
+        <div class="folder-content" v-show="isOpen">
+            <folder 
+                v-for="(nestedFolder, index) in folder.Folders" 
+                v-bind:key="nestedFolder.Id + '-folder'" 
+                v-bind:folder="nestedFolder"
+                v-on:remove="$root.removeFolder(index, folder.Folders)">
+            </folder>
+            <scenario 
+                v-for="(scenario, index) in folder.Scenarios" 
+                v-bind:key="scenario.Id + '-scenario'" 
+                v-bind:scenario="scenario"
+                v-on:remove="$root.removeScenario(index, folder.Scenarios, true)">
+            </scenario>
+        </div>
+    </div>
+</script>
+
+<script type="text/x-template" id="trash-template">
+    <div>
+        <span v-on:click="isOpen = !isOpen">
+            <span v-show="isOpen"><i class="far fa-trash-alt"></i></span>
+            <span v-show="!isOpen"><i class="fas fa-trash-alt"></i></span>
+            Trash
+        </span>
+        <div class="folder-content" v-show="isOpen">
+            <div v-for="scenario in scenarios">
+                <span><i class="fas fa-minus-circle"></i></span>
+                <span>{{scenario.Name}}</span>
+                <span class="text-primary" v-on:click="restoreScenario(scenario)">
+                    <i class="fas fa-trash-restore-alt"></i>
+                </span>
+                <span class="text-danger" v-on:click="removeScenario(scenario)">
+                    <i class="fas fa-trash-alt"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+</script>
+
+<div id="scenario-list" class="scenario-list">
+    <div>
+        <button type="button" class="btn btn-primary btn-sm" v-on:click="createNewFolder">
+            <span><i class="fas fa-folder-plus"></i></span>
+            New folder
+        </button>
+        <button type="button" class="btn btn-primary btn-sm" v-on:click="openScenarioPage()">
+            <span><i class="fas fa-plus-circle"></i></span>
+            New scenario
+        </button>
+        <button type="button" class="btn btn-primary btn-sm" v-on:click="runAll">
+            <span v-show="!isExecuting"><i class="far fa-play-circle"></i></span>
+            <span v-show="isExecuting"><i class="fas fa-spinner fa-spin"></i></span>
+            Run all scenarios
+        </button>
+    </div>
+    <folder v-for="(folder, index) in scenarioList.Folders"
+            v-bind:key="folder.Id + '-folder'"
+            v-bind:folder="folder"
+            v-on:remove="removeFolder(index, scenarioList.Folders)">
+    </folder>
+    <scenario v-for="(scenario, index) in scenarioList.RootScenarios"
+              v-bind:key="scenario.Id"
+              v-bind:scenario="scenario"
+              v-on:remove="removeScenario(index, scenarioList.RootScenarios, true)">
+    </scenario>
+    <trash v-bind:scenarios="scenarioList.TrashScenarios">
+    </trash>
+</div>
+
+<script>
+    var scenarioList = initScenarioList(@ScenarioListJson);
+</script>

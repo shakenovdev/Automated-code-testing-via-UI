@@ -5,24 +5,42 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\scripts\axios.min.js" />
     <None Remove="Resources\scripts\bootstrap.bundle.min.js" />
-    <None Remove="Resources\scripts\fontawesome.all.min.js" />
+    <None Remove="Resources\scripts\fontawesome.min.js" />
     <None Remove="Resources\scripts\jquery-3.3.1.min.js" />
+    <None Remove="Resources\scripts\lodash.min.js" />
+    <None Remove="Resources\scripts\scenario-creator.js" />
+    <None Remove="Resources\scripts\scenario-list.js" />
     <None Remove="Resources\scripts\scenario.js" />
+    <None Remove="Resources\scripts\vue-input-autowidth.js" />
+    <None Remove="Resources\scripts\vue.dev.js" />
+    <None Remove="Resources\scripts\vue.min.js" />
     <None Remove="Resources\styles\bootstrap.min.css" />
+    <None Remove="Resources\styles\fontawesome.min.css" />
+    <None Remove="Resources\styles\site.css" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\scripts\axios.min.js" />
     <EmbeddedResource Include="Resources\scripts\bootstrap.bundle.min.js" />
-    <EmbeddedResource Include="Resources\scripts\fontawesome.all.min.js" />
+    <EmbeddedResource Include="Resources\scripts\fontawesome.min.js" />
     <EmbeddedResource Include="Resources\scripts\jquery-3.3.1.min.js" />
+    <EmbeddedResource Include="Resources\scripts\lodash.min.js" />
+    <EmbeddedResource Include="Resources\scripts\scenario-creator.js" />
+    <EmbeddedResource Include="Resources\scripts\scenario-list.js" />
     <EmbeddedResource Include="Resources\scripts\scenario.js" />
+    <EmbeddedResource Include="Resources\scripts\vue-input-autowidth.js" />
+    <EmbeddedResource Include="Resources\scripts\vue.dev.js" />
+    <EmbeddedResource Include="Resources\scripts\vue.min.js" />
     <EmbeddedResource Include="Resources\styles\bootstrap.min.css" />
+    <EmbeddedResource Include="Resources\styles\site.css" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Routing" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +51,10 @@
     <None Update="Views\Home\Home.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Home.generated.cs</LastGenOutput>
+    </None>
+    <None Update="Views\ScenarioPage\ScenarioPage.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ScenarioPage.generated.cs</LastGenOutput>
     </None>
     <None Update="Views\Shared\Layout.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -45,6 +67,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Home.cshtml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ScenarioPage\ScenarioPage.generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ScenarioPage.cshtml</DependentUpon>
     </Compile>
     <Compile Update="Views\Shared\Layout.generated.cs">
       <DesignTime>True</DesignTime>

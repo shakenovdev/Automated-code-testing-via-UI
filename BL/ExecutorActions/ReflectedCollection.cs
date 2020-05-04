@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using BL.ExecutorActions.Interfaces;
 using BL.ExportedMembers;
+using Newtonsoft.Json;
 using Scenario.Annotations;
 
 namespace BL.ExecutorActions
@@ -25,7 +26,7 @@ namespace BL.ExecutorActions
                 yield return scenarioType;
             }
         }
-
+        
         IEnumerator IEnumerable.GetEnumerator()
         {
             return _scenarioTypes.GetEnumerator();
@@ -36,6 +37,11 @@ namespace BL.ExecutorActions
         public ScenarioType GetByNamespace(string nameSpace)
         {
             return _scenarioTypes.FirstOrDefault(x => x.FullName == nameSpace);
+        }
+
+        public string GetJSON()
+        {
+            return JsonConvert.SerializeObject(_scenarioTypes);
         }
 
         #region privates

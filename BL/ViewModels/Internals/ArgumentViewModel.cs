@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
         public VariableViewModel Variable { get; set; }
-        public int Order { get; set; }
+        public short Order { get; set; }
     }
 }

@@ -7,5 +7,6 @@ namespace DAL.Repositories.Interfaces
     {
         Scenario GetEntirely(int scenarioId);
         void SoftDeleteFolderScenarios(int folderId);
+        void UpdateByLocal(Scenario scenario);
     }
 }

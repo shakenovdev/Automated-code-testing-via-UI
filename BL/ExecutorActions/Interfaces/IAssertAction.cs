@@ -1,7 +1,9 @@
-﻿namespace BL.ExecutorActions.Interfaces
+﻿using DAL.Models;
+
+namespace BL.ExecutorActions.Interfaces
 {
     internal interface IAssertAction
     {
-        bool Check(int assertId);
+        void Check(Assert assert);
     }
 }

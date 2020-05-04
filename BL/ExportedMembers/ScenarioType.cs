@@ -15,7 +15,7 @@ namespace BL.ExportedMembers
         }
 
         public override string FullName => _typeInfo.FullName;
-        public override string Type => _typeInfo.DeclaringType?.Name;
+        public override string Type => _typeInfo.Name;
 
         public Constructor[] Constructors;
         public Field[] Fields;

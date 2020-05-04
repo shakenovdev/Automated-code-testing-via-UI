@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Scenario</id>
-    <version>0.0.7</version>
+    <version>0.0.11</version>
     <authors>Damir Shakenov</authors>
     <owners>Damir Shakenov</owners>
     <licenseUrl>https://github.com/shakenovdev</licenseUrl>
@@ -15,6 +15,8 @@
     <tags>ASP.NET Test Automation</tags>
     <dependencies>
       <dependency id="Newtonsoft.Json" version="12.0.1" />
+      <dependency id="Microsoft.EntityFrameworkCore.Proxies" version="2.2.4" />
+      <dependency id="Microsoft.EntityFrameworkCore.Sqlite" version="2.2.3" />
     </dependencies>
   </metadata>
 </package>

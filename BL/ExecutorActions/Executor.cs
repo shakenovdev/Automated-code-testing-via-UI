@@ -1,4 +1,9 @@
-﻿using BL.ExecutorActions.Interfaces;
+﻿using System;
+using System.Linq;
+using BL.ExecutorActions.Interfaces;
+using DAL.Enums;
+using Action = DAL.Models.Action;
+using ScenarioEntity = DAL.Models.Scenario;
 
 namespace BL.ExecutorActions
 {
@@ -17,9 +22,34 @@ namespace BL.ExecutorActions
             _assertAction = assertAction;
         }
 
-        public ExecutionResult Execute(int scenarioId)
+        public void Execute(ScenarioEntity scenario)
         {
-            throw new System.NotImplementedException();
+            foreach (var scenarioAction in scenario.Actions.OrderBy(x => x.Order))
+            {
+                ExecuteAction(scenarioAction);
+            }
+        }
+
+        private void ExecuteAction(Action action)
+        {
+            switch (action.Type)
+            {
+                case ActionType.SetVariable:
+                    _variableAction.SetConstant(action.Variable);
+                    break;
+                case ActionType.RunMethod:
+                    var result = _methodAction.Run(action.Method);
+
+                    if (action.VariableId.HasValue && !string.IsNullOrEmpty(action.Variable.Name))
+                        _variableAction.SetObject(action.Variable, result);
+
+                    break;
+                case ActionType.Assert:
+                    _assertAction.Check(action.Assert);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

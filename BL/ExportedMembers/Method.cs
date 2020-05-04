@@ -17,6 +17,7 @@ namespace BL.ExportedMembers
             return _methodInfo.Invoke(obj, parameters);
         }
 
+        public bool IsStatic => _methodInfo.IsStatic;
         public override string Type => _methodInfo.ReturnType.Name;
     }
 }

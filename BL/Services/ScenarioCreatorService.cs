@@ -32,12 +32,15 @@ namespace BL.Services
 
         public void Create(ScenarioCreationViewModel scenarioCreation)
         {
-            throw new System.NotImplementedException();
+            var scenarioEntity = scenarioCreation.ToScenarioCreation();
+            _scenarioRepository.Create(scenarioEntity);
         }
 
         public void Edit(ScenarioCreationViewModel scenarioCreation)
         {
-            throw new System.NotImplementedException();
+            var scenarioEntity = scenarioCreation.ToScenarioCreation();
+            
+            _scenarioRepository.UpdateByLocal(scenarioEntity);
         }
     }
 }

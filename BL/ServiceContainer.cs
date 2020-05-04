@@ -18,6 +18,7 @@ namespace BL
             services.AddDbContext<ScenarioContext>();
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IScenarioRepository, ScenarioRepository>();
+            services.AddTransient<IFolderRepository, FolderRepository>();
 
             services.AddSingleton<IReflectedCollection, ReflectedCollection>();
             services.AddTransient<IVariableAction, VariableAction>();
@@ -25,10 +26,9 @@ namespace BL
             services.AddTransient<IAssertAction, AssertAction>();
             services.AddTransient<IExecutor, Executor>(serviceProvider =>
             {
-                // repositories
-
+                var reflectedCollection = serviceProvider.GetService<IReflectedCollection>();
                 var variableAction = serviceProvider.GetService<IVariableAction>();
-                var methodAction = new MethodAction(variableAction);
+                var methodAction = new MethodAction(variableAction, reflectedCollection);
                 var assertAction = new AssertAction(variableAction);
 
                 return new Executor(variableAction, methodAction, assertAction);

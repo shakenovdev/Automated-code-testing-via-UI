@@ -17,6 +17,7 @@ namespace BL.ExportedMembers
             return _constructorInfo.Invoke(parameters);
         }
 
+        public int ParametersCount => _constructorInfo.GetParameters().Length;
         public override string Type => null;
     }
 }

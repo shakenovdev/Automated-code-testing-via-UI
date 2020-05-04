@@ -8,6 +8,7 @@ namespace DAL.Models
         public int ValueVariableId { get; set; }
         public int? ExpectedVariableId { get; set; }
         public int? DeltaVariableId { get; set; }
+        public string ExceptionMessage { get; set; }
         
         public virtual Variable ValueVariable { get; set; }
         public virtual Variable ExpectedVariable { get; set; }

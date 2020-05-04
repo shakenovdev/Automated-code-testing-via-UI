@@ -1,17 +1,15 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace ScenarioUI.Views.Home
 {
     partial class Home
     {
-        public readonly IEnumerable<string> Tests;
+        public readonly string ScenarioListJson;
 
-        public Home(HttpContext httpContext,
-            IEnumerable<string> tests)
+        public Home(HttpContext httpContext, string scenarioListJson)
         {
             HttpContext = httpContext;
-            Tests = tests;
+            ScenarioListJson = scenarioListJson;
         }
     }
 }

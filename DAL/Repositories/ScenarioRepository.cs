@@ -49,5 +49,21 @@ namespace DAL.Repositories
 
             Context.SaveChanges();
         }
+
+        public void UpdateByLocal(Scenario scenario)
+        {
+            var local = Context.Set<Scenario>()
+                .Local
+                .FirstOrDefault(entry => entry.Id == scenario.Id);
+
+            if (local != null)
+            {
+                Context.Entry(local).State = EntityState.Detached;
+            }
+
+            Context.Entry(scenario).State = EntityState.Modified;
+
+            Context.SaveChanges();
+        }
     }
 }

@@ -6,7 +6,8 @@ namespace BL.ViewModels
     public class ScenarioCreationViewModel
     {
         public int Id { get; set; }
+        public int? FolderId { get; set; }
         public string Name { get; set; }
-        public List<ActionViewModel> Actions { get; set; }
+        public List<ActionViewModel> Actions { get; set; } = new List<ActionViewModel>();
     }
 }

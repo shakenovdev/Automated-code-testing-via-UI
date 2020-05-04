@@ -5,15 +5,11 @@ namespace ScenarioUI.ViewGenerators
 {
     internal class WebViewGenerator : RazorViewGenerator
     {
-        public  HttpContext HttpContext { get; set; }
-        public HttpResponse Response { get { return HttpContext.Response; } }
-        public HttpRequest Request { get { return HttpContext.Request; } }
-        
-        public string Root
-        {
-            get => Request.PathBase + "/scenario";
-        }
-        
+        public HttpContext HttpContext { get; set; }
+        public HttpResponse Response => HttpContext.Response;
+        public HttpRequest Request => HttpContext.Request;
+        public string Root => Request.PathBase + "/scenario";
+
         public IHtmlString Html(string html)
         {
             return new HtmlString(html);
@@ -48,7 +44,7 @@ namespace ScenarioUI.ViewGenerators
         public override string TransformText()
         {
             if (HttpContext == null)
-                throw new InvalidOperationException("The _httpContext property has not been initialzed with an instance.");
+                throw new InvalidOperationException("The _httpContext property has not been initialized with an instance.");
             return base.TransformText();
         }
     }

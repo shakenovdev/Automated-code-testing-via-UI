@@ -14,6 +14,7 @@ namespace BL.Mappers
             {
                 Id = entity.Id,
                 Type = entity.Type,
+                ExceptionMessage = entity.ExceptionMessage,
                 ValueVariable = VariableMapper.ToVariableViewModel(entity.ValueVariable),
                 ExpectedVariable = VariableMapper.ToVariableViewModel(entity.ExpectedVariable),
                 DeltaVariable = VariableMapper.ToVariableViewModel(entity.DeltaVariable)
@@ -32,6 +33,7 @@ namespace BL.Mappers
                 ValueVariableId = model.ValueVariable.Id,
                 ExpectedVariableId = model.ExpectedVariable?.Id,
                 DeltaVariableId = model.DeltaVariable?.Id,
+                ExceptionMessage = model.ExceptionMessage,
                 ValueVariable = VariableMapper.ToVariable(model.ValueVariable),
                 ExpectedVariable = VariableMapper.ToVariable(model.ExpectedVariable),
                 DeltaVariable = VariableMapper.ToVariable(model.DeltaVariable),

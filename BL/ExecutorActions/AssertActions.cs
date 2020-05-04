@@ -1,4 +1,7 @@
-﻿using BL.ExecutorActions.Interfaces;
+﻿using System;
+using BL.ExecutorActions.Interfaces;
+using DAL.Enums;
+using DAL.Models;
 
 namespace BL.ExecutorActions
 {
@@ -11,29 +14,54 @@ namespace BL.ExecutorActions
             _variableAction = variableAction;
         }
 
-        public bool Check(int assertId)
+        public void Check(Assert assert)
         {
-            throw new System.NotImplementedException();
+            bool checkResult;
+
+            switch (assert.Type)
+            {
+                case AssertType.AreEqual:
+                    checkResult = CheckEquality(assert);
+                    break;
+                case AssertType.AreNotEqual:
+                    checkResult = CheckNonEquality(assert);
+                    break;
+                case AssertType.IsTrue:
+                    checkResult = CheckIsTrue(assert);
+                    break;
+                case AssertType.IsFalse:
+                    checkResult = CheckIsFalse(assert);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            if (!checkResult)
+                throw new AssertException(assert.ExceptionMessage);
         }
 
-        private bool CheckEquality()
+        private bool CheckEquality(Assert assert)
         {
-            throw new System.NotImplementedException();
+            var value = _variableAction.Get(assert.ValueVariable);
+            var expectedValue = _variableAction.Get(assert.ExpectedVariable);
+
+            return value.Equals(expectedValue);
         }
 
-        private bool CheckNonEquality()
+        private bool CheckNonEquality(Assert assert)
         {
-            throw new System.NotImplementedException();
+            return !CheckEquality(assert);
         }
 
-        private bool CheckIsTrue()
+        private bool CheckIsTrue(Assert assert)
         {
-            throw new System.NotImplementedException();
+            var value = (bool)_variableAction.Get(assert.ValueVariable);
+            return value;
         }
 
-        private bool CheckIsFalse()
+        private bool CheckIsFalse(Assert assert)
         {
-            throw new System.NotImplementedException();
+            return !CheckIsTrue(assert);
         }
     }
 }

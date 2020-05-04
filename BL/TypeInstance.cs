@@ -48,7 +48,7 @@ namespace BL
 
         private object Construct(object[] parameters)
         {
-            var constructor = _scenarioType.Constructors.First();
+            var constructor = _scenarioType.Constructors.Single(x => x.ParametersCount == parameters.Length);
             return constructor.Construct(parameters);
         }
     }

@@ -24,5 +24,13 @@ namespace DAL
                 .UseLazyLoadingProxies()
                 .UseSqlite("Data Source=scenario.db");
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Folder>()
+                .HasMany(x => x.Children)
+                .WithOne(x => x.ParentFolder)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }

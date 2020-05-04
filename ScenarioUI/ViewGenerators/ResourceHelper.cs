@@ -10,16 +10,16 @@ namespace ScenarioUI.ViewGenerators
 {
     internal static class ResourceHelper
     {
-        private static byte[] _newLine = Encoding.ASCII.GetBytes(Environment.NewLine);
+        private static readonly byte[] _newLine = Encoding.ASCII.GetBytes(Environment.NewLine);
 
-        public static async Task LoadStyleSheets(HttpContext httpContext)
+        public static async Task LoadStyleSheets(HttpContext httpContext, IEnumerable<string> sources)
         {
-            await LoadResourcesAsync(httpContext, UIConstants.CSSBundle, UIConstants.CSSMediaType);
+            await LoadResourcesAsync(httpContext, sources, UIConstants.CSSMediaType);
         }
 
-        public static async Task LoadJavaScripts(HttpContext httpContext)
+        public static async Task LoadJavaScripts(HttpContext httpContext, IEnumerable<string> sources)
         {
-            await LoadResourcesAsync(httpContext, UIConstants.JavaScriptBundle, UIConstants.JavaScriptMediaType);
+            await LoadResourcesAsync(httpContext, sources, UIConstants.JavaScriptMediaType);
         }
 
         private static async Task LoadResourcesAsync(HttpContext httpContext, IEnumerable<string> sources, string contentType)

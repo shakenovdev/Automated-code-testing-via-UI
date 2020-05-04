@@ -1,8 +1,12 @@
-﻿namespace BL.ExecutorActions.Interfaces
+﻿using DAL.Models;
+
+namespace BL.ExecutorActions.Interfaces
 {
     internal interface IVariableAction
     {
-        object Get(int variableId);
-        void Set(int variableId);
+        object Get(Variable variable);
+        TypeInstance GetTypeInstance(Variable variable);
+        void SetConstant(Variable variable);
+        void SetObject(Variable variable, object value);
     }
 }

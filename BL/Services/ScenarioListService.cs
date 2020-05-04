@@ -1,4 +1,5 @@
-﻿using BL.Mappers;
+﻿using System.Collections.Generic;
+using BL.Mappers;
 using BL.Services.Interfaces;
 using DAL.Models;
 using DAL.Repositories.Interfaces;
@@ -11,13 +12,16 @@ namespace BL.Services
     public class ScenarioListService : IScenarioListService
     {
         private readonly IScenarioRepository _scenarioRepository;
-        private readonly IGenericRepository<Folder> _folderRepository;
+        private readonly IFolderRepository _folderRepository;
+        private readonly IScenarioExecutorService _scenarioExecutorService;
 
         public ScenarioListService(IScenarioRepository scenarioRepository,
-            IGenericRepository<Folder> folderRepository)
+            IFolderRepository folderRepository,
+            IScenarioExecutorService scenarioExecutorService)
         {
             _scenarioRepository = scenarioRepository;
             _folderRepository = folderRepository;
+            _scenarioExecutorService = scenarioExecutorService;
         }
 
         public ScenarioListViewModel GetAll()
@@ -38,14 +42,14 @@ namespace BL.Services
                     .ToList();
 
                 var nestedFolders = allFolders
-                    .Where(x => x.ParentId.GetValueOrDefault() == folder.Id)
+                    .Where(x => x.ParentFolderId.GetValueOrDefault() == folder.Id)
                     .Select(AssembleFolder)
                     .ToList();
 
                 return new FolderViewModel()
                 {
                     Id = folder.Id,
-                    ParentId = folder.ParentId,
+                    ParentId = folder.ParentFolderId,
                     Name = folder.Name,
                     Folders = nestedFolders,
                     Scenarios = folderScenarios
@@ -53,7 +57,7 @@ namespace BL.Services
             }
 
             var folders = allFolders
-                .Where(x => !x.ParentId.HasValue)
+                .Where(x => !x.ParentFolderId.HasValue)
                 .Select(AssembleFolder)
                 .ToList();
 
@@ -68,17 +72,26 @@ namespace BL.Services
                 .Select(ScenarioMapper.ToScenarioViewModel)
                 .ToList();
 
-            return new ScenarioListViewModel
+            var scenarioList = new ScenarioListViewModel
             {
                 Folders = folders,
                 RootScenarios = rootScenarios,
                 TrashScenarios = trashScenarios
             };
+
+            _scenarioExecutorService.FillExecutionResults(scenarioList);
+
+            return scenarioList;
         }
 
         public void DeleteScenario(int scenarioId)
         {
             _scenarioRepository.SoftRemoveById(scenarioId);
+        }
+
+        public void RestoreScenario(int scenarioId)
+        {
+            _scenarioRepository.RestoreById(scenarioId);
         }
 
         public void MoveScenarioToFolder(int scenarioId, int folderId)
@@ -92,7 +105,7 @@ namespace BL.Services
         {
             var folderEntity = new Folder
             {
-                ParentId = folder.ParentId,
+                ParentFolderId = folder.ParentId,
                 Name = folder.Name
             };
 
@@ -101,8 +114,9 @@ namespace BL.Services
             return new FolderViewModel
             {
                 Id = folderEntity.Id,
-                ParentId = folderEntity.ParentId,
-                Name = folderEntity.Name
+                ParentId = folderEntity.ParentFolderId,
+                Name = folderEntity.Name,
+                Folders = new List<FolderViewModel>()
             };
         }
 
@@ -113,10 +127,11 @@ namespace BL.Services
             _folderRepository.Update(folderEntity);
         }
 
-        public void DeleteFolder(int folderId)
+        public List<ScenarioViewModel> DeleteFolder(int folderId)
         {
-            _scenarioRepository.SoftDeleteFolderScenarios(folderId);
-            _folderRepository.HardRemoveById(folderId);
+            var trashScenarios = _folderRepository.DeleteFolder(folderId);
+
+            return trashScenarios.Select(ScenarioMapper.ToScenarioViewModel).ToList();
         }
     }
 }

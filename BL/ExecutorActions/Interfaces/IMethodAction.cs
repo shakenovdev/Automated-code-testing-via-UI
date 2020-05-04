@@ -1,7 +1,9 @@
-﻿namespace BL.ExecutorActions.Interfaces
+﻿using DAL.Models;
+
+namespace BL.ExecutorActions.Interfaces
 {
     internal interface IMethodAction
     {
-        void Run(int methodId);
+        object Run(Method method);
     }
 }

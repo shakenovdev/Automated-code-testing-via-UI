@@ -1,8 +1,8 @@
-﻿using System.Linq;
+﻿using System;
 using DAL.Models;
 using DAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Remotion.Linq.Utilities;
+using System.Linq;
 
 namespace DAL.Repositories
 {
@@ -19,8 +19,9 @@ namespace DAL.Repositories
 
         public void Create(TEntity item)
         {
+            item.LastModifiedDate = DateTime.Now;
             DbSet.Add(item);
-            Update(item);
+            Context.SaveChanges();
         }
 
         public TEntity FindById(int id)
@@ -78,6 +79,7 @@ namespace DAL.Repositories
 
         public void Update(TEntity item)
         {
+            item.LastModifiedDate = DateTime.Now;
             DbSet.Update(item);
             Context.SaveChanges();
         }

@@ -6,6 +6,7 @@ namespace BL.ViewModels.Internals
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string TypeName { get; set; }
         public bool IsStatic { get; set; }
         public bool IsConstructor { get; set; }
         public VariableViewModel Variable { get; set; }

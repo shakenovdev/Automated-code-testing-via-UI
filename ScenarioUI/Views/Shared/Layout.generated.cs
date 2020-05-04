@@ -30,6 +30,7 @@ namespace ScenarioUI.Views.Shared
         #line 5 "..\..\Views\Shared\Layout.cshtml"
 
 public string Title { get; set; }
+public string SpecificScript { get; set; }
 
         #line default
         #line hidden
@@ -43,11 +44,14 @@ WriteLiteral("\r\n");
 
 
 
-WriteLiteral("\r\n\r\n<!DOCTYPE html>\r\n<html>\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n");
+WriteLiteral("\r\n\r\n<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"utf-8\">\r\n    <m" +
+"eta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=" +
+"no\">\r\n    <meta name=\"description\" content=\"\">\r\n    <meta name=\"author\" content=" +
+"\"\">\r\n\r\n");
 
 
             
-            #line 13 "..\..\Views\Shared\Layout.cshtml"
+            #line 18 "..\..\Views\Shared\Layout.cshtml"
      if (!string.IsNullOrEmpty(Title))
     {
 
@@ -58,7 +62,7 @@ WriteLiteral("        <title>");
 
 
             
-            #line 15 "..\..\Views\Shared\Layout.cshtml"
+            #line 20 "..\..\Views\Shared\Layout.cshtml"
           Write(Title);
 
             
@@ -68,43 +72,127 @@ WriteLiteral("</title>\r\n");
 
 
             
-            #line 16 "..\..\Views\Shared\Layout.cshtml"
+            #line 21 "..\..\Views\Shared\Layout.cshtml"
     }
 
             
             #line default
             #line hidden
-WriteLiteral("    <link href=\"");
+WriteLiteral("\r\n    <link href=\"");
 
 
             
-            #line 17 "..\..\Views\Shared\Layout.cshtml"
+            #line 23 "..\..\Views\Shared\Layout.cshtml"
            Write(Root);
 
             
             #line default
             #line hidden
-WriteLiteral("/css\" rel=\"stylesheet\">\r\n    <script src=\"");
+WriteLiteral("/staticfile/css\" rel=\"stylesheet\">\r\n    <script src=\"");
 
 
             
-            #line 18 "..\..\Views\Shared\Layout.cshtml"
+            #line 24 "..\..\Views\Shared\Layout.cshtml"
             Write(Root);
 
             
             #line default
             #line hidden
-WriteLiteral("/javascript\"></script>\r\n</head>\r\n\r\n<body>\r\n    ");
+WriteLiteral("/staticfile/javascript\"></script>\r\n\r\n");
 
 
             
-            #line 22 "..\..\Views\Shared\Layout.cshtml"
-Write(RenderBody());
+            #line 26 "..\..\Views\Shared\Layout.cshtml"
+     if (!string.IsNullOrEmpty(SpecificScript))
+    {
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n</body>\r\n\r\n</html>");
+WriteLiteral("        <script src=\"");
+
+
+            
+            #line 28 "..\..\Views\Shared\Layout.cshtml"
+                Write(Root);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("/staticfile/");
+
+
+            
+            #line 28 "..\..\Views\Shared\Layout.cshtml"
+                                 Write(SpecificScript);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\"></script>\r\n");
+
+
+            
+            #line 29 "..\..\Views\Shared\Layout.cshtml"
+    }
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@"</head>
+
+<body>
+
+    <nav class=""navbar navbar-expand-sm navbar-dark bg-dark"">
+        <a class=""navbar-brand text-success"" href=""#"">Scenario</a>
+        <button class=""navbar-toggler"" type=""button"" data-toggle=""collapse"" data-target=""#navbar"" aria-controls=""navbar"" aria-expanded=""false"" aria-label=""Toggle navigation"">
+            <span class=""navbar-toggler-icon""></span>
+        </button>
+
+        <div class=""collapse navbar-collapse"" id=""navbar"">
+            <ul class=""navbar-nav mr-auto"">
+                <li class=""nav-item active"">
+                    <a class=""nav-link"" href=""#"">List <span class=""sr-only"">(current)</span></a>
+                </li>
+                <li class=""nav-item"">
+                    <a class=""nav-link"" href=""#"">Add new</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class=""container"">
+        ");
+
+
+            
+            #line 53 "..\..\Views\Shared\Layout.cshtml"
+   Write(RenderBody());
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@"
+    </div>
+
+    <footer class=""footer"">
+        <div class=""container"">
+            <a class=""text-dark"" href=""https://github.com/shakenovdev"" target=""_blank"">
+                <i class=""fab fa-github""></i>
+                /shakenovdev
+            </a>
+            <a class=""text-dark"" href=""#"" target=""_blank"">
+                <i class=""fas fa-list-alt""></i>
+                Documentation
+            </a>
+            <span class=""float-right text-dark"">
+                developed by 
+                <a class=""text-dark font-weight-bold"" href=""https://github.com/shakenovdev"" target=""_blank"">shakenovdev</a>
+            </span>
+        </div>
+    </footer>
+</body>
+</html>");
 
 
         }

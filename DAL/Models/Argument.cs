@@ -4,7 +4,7 @@
     {
         public int MethodId { get; set; }
         public int VariableId { get; set; }
-        public int Order { get; set; }
+        public short Order { get; set; }
 
         public virtual Variable Variable { get; set; }
     }

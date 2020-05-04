@@ -1,13 +1,9 @@
-﻿namespace BL.ExecutorActions.Interfaces
+﻿using ScenarioEntity = DAL.Models.Scenario;
+
+namespace BL.ExecutorActions.Interfaces
 {
     public interface IExecutor
     {
-        ExecutionResult Execute(int scenarioId);
-    }
-
-    public class ExecutionResult
-    {
-        public bool IsSuccess { get; set; }
-        public string Message { get; set; }
+        void Execute(ScenarioEntity scenario);
     }
 }

@@ -15,6 +15,7 @@ namespace BL.Mappers
                 Id = entity.Id,
                 Type = entity.Type,
                 Name = entity.Name,
+                PropertyName = entity.PropertyName,
                 ConstantValue = entity.ConstantValue,
                 ParentVariable = ToVariableViewModel(entity.ParentVariable)
             };
@@ -28,9 +29,10 @@ namespace BL.Mappers
             return new Variable
             {
                 Id = model.Id,
-                ParentId = model.ParentVariable?.Id,
+                ParentVariableId = model.ParentVariable?.Id,
                 Type = model.Type,
                 Name = model.Name,
+                PropertyName = model.PropertyName,
                 ConstantValue = model.ConstantValue,
                 ParentVariable = ToVariable(model.ParentVariable)
             };

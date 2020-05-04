@@ -5,7 +5,10 @@ namespace BL.Services.Interfaces
 {
     public interface IScenarioExecutorService
     {
-        ExecutionResultViewModel RunSingle(int scenarioId);
-        IEnumerable<ExecutionResultViewModel> RunAll();
+        void RunSingle(int scenarioId);
+        List<int> RunAll();
+        ExecutionResultViewModel GetExecutionResult(int scenarioId);
+        IEnumerable<ExecutionResultViewModel> GetAllExecutionResults(ICollection<int> scenarioIds);
+        void FillExecutionResults(ScenarioListViewModel scenarioList);
     }
 }

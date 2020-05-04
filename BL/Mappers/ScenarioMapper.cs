@@ -10,10 +10,7 @@ namespace BL.Mappers
             return new ScenarioViewModel
             {
                 Id = entity.Id,
-                Name = entity.Name,
-                LastExecutedDate = entity.LastExecutedDate,
-                LastExecutedStatus = entity.LastExecutedStatus,
-                LastExecutionTime = entity.LastExecutionTime
+                Name = entity.Name
             };
         }
 

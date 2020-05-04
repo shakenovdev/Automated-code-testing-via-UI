@@ -16,7 +16,7 @@ namespace BL.ExportedMembers
                 .ToArray();
         }
 
-        protected Parameter[] Parameters;
+        public Parameter[] Parameters;
 
         public override string ToString()
         {

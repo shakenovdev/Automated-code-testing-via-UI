@@ -1,0 +1,173 @@
+﻿@* Generator: Template TypeVisibility: Internal *@
+@using ScenarioUI.Views.Shared
+@using ScenarioUI.ViewGenerators
+@inherits WebViewGenerator
+
+@{
+    Layout = new Layout
+    {
+        HttpContext = HttpContext,
+        Title = "💉 scenario page",
+        SpecificScript = "scenariocreator"
+    };
+}
+
+<script type="text/x-template" id="assign-template">
+    <span>
+        <variable v-bind:variable="action.Variable"
+                  v-bind:placeholder="'enter variable name'">
+        </variable>
+        <span>
+            =
+        </span>
+        <span>
+            <input type="text"
+                   placeholder="enter value"
+                   v-autowidth="{maxWidth: '12em', minWidth: '1em', comfortZone: 0}"
+                   v-model="action.Variable.ConstantValue"/>
+        </span>
+    </span>
+</script>
+
+<script type="text/x-template" id="execute-template">
+    <span>
+        <variable v-bind:variable="action.Variable"
+                  v-bind:placeholder="'enter variable name'">
+        </variable>
+        <span>
+            =
+        </span>
+        <span>
+            <input type="text"
+                   list="existingMethods"
+                   placeholder="choose method name"
+                   v-autowidth="{maxWidth: '20em', minWidth: '1em', comfortZone: 30}"
+                   v-model="selectedMethod"
+                   v-on:focus="$root.recalculateExistingMethods" />
+        </span>
+        <span>
+            (
+        </span>
+        <template v-if="action.Method.Arguments.length > 0">
+            <variable v-for="(argument, index) in action.Method.Arguments"
+                      v-bind:key="_.uniqueId()"
+                      v-bind:variable="argument.Variable"
+                      v-bind:placeholder="argumentsPlaceholders[index]"
+                      v-bind:include-comma="index > 0"
+                      v-bind:is-readonly="true">
+
+            </variable>
+        </template>
+        <span>
+            )
+        </span>
+    </span>
+</script>
+
+<script type="text/x-template" id="assert-template">
+    <span>
+        <span>Assert.</span>
+        <span>
+            <select v-model="action.Assert.Type">
+                <option v-for="assertType in assertTypes" v-bind:value="assertType.value">
+                    {{ assertType.text }}
+                </option>
+            </select>
+        </span>
+        <span v-if="action.Assert.Type >= 0">
+            <span>
+                (
+            </span>
+            <variable v-bind:variable="action.Assert.ValueVariable"
+                      v-bind:placeholder="'actual value'"
+                      v-bind:is-readonly="true">
+            </variable>
+            <variable v-bind:variable="action.Assert.ExpectedVariable"
+                      v-bind:placeholder="'expected value'"
+                      v-bind:include-comma="true"
+                      v-bind:is-readonly="true">
+            </variable>
+            <span>
+                )
+            </span>
+        </span>
+    </span>
+</script>
+
+<script type="text/x-template" id="variable-template">
+    <span v-if="variable">
+        <span v-if="includeComma">, </span>
+        <input type="text"
+               list="existingVariables"
+               v-autowidth="{maxWidth: '12em', minWidth: '1em', comfortZone: 30}"
+               v-model="variableValue"
+               v-on:focus="$root.recalculateExistingVariables"
+               v-bind:placeholder="placeholder" />
+        <span v-if="availableProperties.length > 0">
+            <span>.</span>
+            <select v-model="propertyValue">
+                <option v-for="property in availableProperties">
+                    {{ property }}
+                </option>
+            </select>
+        </span>
+    </span>
+</script>
+
+<div id="scenario-creator" class="scenario-creator">
+    <div class="top-name">
+        <span>Scenario name:</span>
+        <input v-model="scenarioPage.Name" />
+    </div>
+    <div>
+        <button type="button" class="btn btn-primary btn-sm" v-on:click="createNewAction(actionTypes.assign)">
+            Assign
+        </button>
+        <button type="button" class="btn btn-primary btn-sm" v-on:click="createNewAction(actionTypes.execute)">
+            Execute
+        </button>
+        <button type="button" class="btn btn-primary btn-sm" v-on:click="createNewAction(actionTypes.assert)">
+            Assert
+        </button>
+    </div>
+    <div class="edit-area">
+        <template v-for="(action, index) in orderedActions">
+            <div class="edit-action"
+                 v-on:click="focusAction(index)"
+                 v-bind:class="{ focused: focusedActionIndex === index }">
+                <span class="edit-operations text-primary">
+                    <span v-on:click="upAction(index)"><i class="far fa-arrow-alt-circle-up"></i></span>
+                    <span v-on:click="downAction(index)"><i class="far fa-arrow-alt-circle-down"></i></span>
+                    <span v-on:click="removeAction(index)"><i class="far fa-times-circle"></i></span>
+                </span>
+                <span>{{action.Order + 1}}.</span>
+                <assign v-if="action.Type == actionTypes.assign"
+                        v-bind:action="action">
+                </assign>
+                <execute v-else-if="action.Type == actionTypes.execute"
+                         v-bind:action="action">
+                </execute>
+                <assert v-else-if="action.Type == actionTypes.assert"
+                        v-bind:action="action">
+                </assert>
+            </div>
+        </template>
+    </div>
+    <div class="save">
+        <button type="button" class="btn btn-primary btn-sm" v-on:click="saveScenario">
+            Save
+        </button>
+    </div>
+
+    <datalist id="existingVariables">
+        <option v-for="variable in existingVariables">{{variable.Name}}</option>
+    </datalist>
+
+    <datalist id="existingMethods">
+        <option v-for="methodName in Object.keys(existingMethods)">{{methodName}}</option>
+    </datalist>
+</div>
+
+<script>
+    var scenarioPage = initScenarioPage(@ReflectedCollectionJson, @ScenarioPageJson);
+</script>
